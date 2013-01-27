@@ -14,4 +14,12 @@ describe DiceRoller::Roll do
     DiceRoller::Roll.new({d12: 1}).result.should eq(12)
     DiceRoller::Roll.new({d20: 1}).result.should eq(20)
   end
+
+  it "throws multiple dices of the same type" do
+    DiceRoller::Roll.new({d4: 3}).result.should eq(12)
+  end
+
+  it "throws multiple dices of mixes types" do
+    DiceRoller::Roll.new({d4: 3, d12: 1}).result.should eq(24)
+  end
 end

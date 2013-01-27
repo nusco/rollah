@@ -12,7 +12,7 @@ module DiceRoller
       result = 0
       @dices.each do |dice, times|
         dicemax = dice.to_s.gsub(/^d/, '').to_i
-        result += DiceRoller.throw_dice(dicemax)
+        times.times { result += DiceRoller.throw_dice(dicemax) }
       end
       result
     end
