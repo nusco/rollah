@@ -29,6 +29,17 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    rake (10.0.3)
+    rspec (2.0.1)
+      rspec-core (~> 2.0.1)
+      rspec-expectations (~> 2.0.1)
+      rspec-mocks (~> 2.0.1)
+    rspec-core (2.0.1)
+    rspec-expectations (2.0.1)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.1)
+      rspec-core (~> 2.0.1)
+      rspec-expectations (~> 2.0.1)
     rubyzip (0.9.9)
     selenium-webdriver (2.29.0)
       childprocess (>= 0.2.5)
@@ -50,4 +61,6 @@ PLATFORMS
 DEPENDENCIES
   capybara
   cucumber
+  rake
+  rspec
   sinatra
