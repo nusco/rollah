@@ -1,13 +1,13 @@
 Given /^I use weighted dice$/ do
-  pending # express the regexp above with the code you wish you had
+  ENV["DICE"] = "weighted"
 end
 
 Given /^I am on the homepage$/ do
-  pending # express the regexp above with the code you wish you had
+  visit "/"
 end
 
 When /^I write "(.*?)" in "(.*?)"$/ do |text, textfield|
-  pending # express the regexp above with the code you wish you had
+  fill_in textfield, :with => text
 end
 
 When /^I press "(.*?)"$/ do |button|
