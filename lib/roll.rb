@@ -7,7 +7,7 @@ module Rollah
     
     def initialize(dice = [])
       @dice = dice
-      @id = Rollah.next_id
+      @id = Rollah.next_id.to_s
       $ROLLS[@id] = self
       roll!
     end

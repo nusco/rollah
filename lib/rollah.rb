@@ -11,6 +11,11 @@ post '/' do
 end
 
 get "/rolls/:roll_id" do
-  @roll = Rollah.find(params[:roll_id].to_i)
+  @roll = Rollah.find(params[:roll_id])
+  return 404 if !@roll
   erb :roll
+end
+
+not_found do
+  erb :roll_not_found
 end
