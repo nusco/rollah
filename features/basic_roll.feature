@@ -10,5 +10,5 @@ Background:
 Scenario: Roll one dice
   Given I am on the homepage
   When I write "d6" in "Dice:"
-  And I press "Roll now"
+  And I press "Roll Now"
   Then I should see "1"

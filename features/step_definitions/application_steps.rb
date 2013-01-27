@@ -11,7 +11,7 @@ When /^I write "(.*?)" in "(.*?)"$/ do |text, textfield|
 end
 
 When /^I press "(.*?)"$/ do |button|
-  pending # express the regexp above with the code you wish you had
+  click_button button
 end
 
 Then /^I should see "(.*?)"$/ do |text|
