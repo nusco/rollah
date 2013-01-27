@@ -5,7 +5,7 @@ as a Player
 I want to roll dice
 
 Background:
-  Given I use weighted dice
+  Given I use weighted dices
 
 Scenario: Roll one dice
   Given I am on the homepage

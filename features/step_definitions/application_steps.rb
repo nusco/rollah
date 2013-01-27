@@ -1,5 +1,5 @@
-Given /^I use weighted dice$/ do
-  ENV["DICE"] = "weighted"
+Given /^I use weighted dices$/ do
+  DiceRoller.weight_dices!
 end
 
 Given /^I am on the homepage$/ do
