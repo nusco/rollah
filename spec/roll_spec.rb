@@ -1,16 +1,25 @@
 $: << File.expand_path("../../lib", File.dirname(__FILE__))
 
 require "roll"
+require "timecop"
 
 describe Rollah::Roll do
   before do
-    Rollah.weight_dices!
+    Rollah.weight_dice!
   end
 
   it "has a unique id" do
     roll1 = Rollah::Roll.new
     roll2 = Rollah::Roll.new
     roll1.id.should_not eq(roll2.id)
+  end
+
+  it "has a rolling date" do
+    time = Time.local(2013, 1, 27, 12, 05, 0)
+    Timecop.freeze(time) do
+      roll1 = Rollah::Roll.new
+      roll1.rolled_on.should eq("January 27, 2013 at 12:05PM")
+    end
   end
   
   it "throws a single dice (d4, d6, d8, d12 or d20)" do
@@ -37,7 +46,7 @@ end
 
 describe Rollah do
   before do
-    Rollah.weight_dices!
+    Rollah.weight_dice!
   end
   
   it "finds rolls by id" do

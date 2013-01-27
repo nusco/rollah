@@ -3,31 +3,27 @@ $LAST_ID = [0]
 
 module Rollah
   class Roll
-    attr_reader :id
+    attr_reader :id, :results, :total
     
-    def initialize(dices = [])
-      @dices = dices
+    def initialize(dice = [])
+      @dice = dice
       @id = Rollah.next_id
       $ROLLS[@id] = self
+      roll!
     end
     
-    def results
-      roll! unless @results
-      @results
-    end
-    
-    def total
-      roll! unless @results
-      @total
+    def rolled_on
+      @rolled_on.strftime("%B %d, %Y at %I:%M%p")
     end
     
     def roll!
+      @rolled_on = Time.now
       @results = []
       @total = 0
-      @dices.each do |dice_type, times|
+      @dice.each do |die_type, times|
         times.times do
-          value = Rollah.throw_dice(dice_type)
-          @results << ["d#{dice_type}", value]
+          value = Rollah.throw_die(die_type)
+          @results << ["d#{die_type}", value]
           @total += value
         end
       end
@@ -44,25 +40,21 @@ module Rollah
     end
   
     def parse(roll)
-      rolls_by_dice_type = roll.downcase.split '+'
-      all_rolls = rolls_by_dice_type.map do |roll|
+      rolls_by_die_type = roll.downcase.split '+'
+      all_rolls = rolls_by_die_type.map do |roll|
         roll = "1#{roll}" if roll.start_with? 'd'
         roll.split('d').map(&:to_i).reverse
       end
       Roll.new(all_rolls)
     end
-
-    def parse_dice_type(throw)
-      Roll.new({"d#{dice}" => times})
-    end
   
-    def throw_dice(dice)
-      return dice if @weighted
-      rand(dice) + 1
+    def throw_die(die)
+      return die if @weighted
+      rand(die) + 1
     end
 
     # "You know... for the tests"
-    def weight_dices!
+    def weight_dice!
       @weighted = true
     end
   end

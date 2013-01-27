@@ -1,5 +1,9 @@
 Given /^I use weighted dices$/ do
-  Rollah.weight_dices!
+  Rollah.weight_dice!
+end
+
+Given /^it's January 27th, 2013 at noon$/ do
+  Timecop.freeze(Time.local(2013, 1, 27, 12, 0, 0))
 end
 
 Given /^I am on the homepage$/ do
@@ -28,4 +32,8 @@ end
 
 When /^I open the bookmarked page$/ do
   visit @bookmark
+end
+
+After do
+  Timecop.return
 end
