@@ -1,4 +1,4 @@
-diceroller
-==========
+Dicey
+=====
 
-A web app to roll dices, for online gamers
+A web app to roll dice, for online RPG gamers.

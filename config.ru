@@ -1,2 +1,2 @@
-require './lib/diceroller'
+require './lib/dicey'
 run Sinatra::Application

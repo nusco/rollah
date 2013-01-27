@@ -7,7 +7,7 @@ describe DiceRoller::Roll do
     DiceRoller.weight_dices!
   end
 
-  it "throws a d4, d6, d8, d12 or d20" do
+  it "throws a single dice (d4, d6, d8, d12 or d20)" do
     DiceRoller::Roll.new({4 => 1}).total.should eq(4)
     DiceRoller::Roll.new({6 => 1}).total.should eq(6)
     DiceRoller::Roll.new({8 => 1}).total.should eq(8)
