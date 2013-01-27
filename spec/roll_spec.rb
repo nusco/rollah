@@ -14,19 +14,24 @@ describe Rollah::Roll do
   end
   
   it "throws a single dice (d4, d6, d8, d12 or d20)" do
-    Rollah::Roll.new({4 => 1}).total.should eq(4)
-    Rollah::Roll.new({6 => 1}).total.should eq(6)
-    Rollah::Roll.new({8 => 1}).total.should eq(8)
-    Rollah::Roll.new({12 => 1}).total.should eq(12)
-    Rollah::Roll.new({20 => 1}).total.should eq(20)
+    Rollah::Roll.new([[4, 1]]).total.should eq(4)
+    Rollah::Roll.new([[6, 1]]).total.should eq(6)
+    Rollah::Roll.new([[8, 1]]).total.should eq(8)
+    Rollah::Roll.new([[12, 1]]).total.should eq(12)
+    Rollah::Roll.new([[20, 1]]).total.should eq(20)
   end
 
-  it "throws multiple dices of the same type" do
-    Rollah::Roll.new({4 => 3}).total.should eq(12)
+  it "throws multiple dice of the same type" do
+    Rollah::Roll.new([[4, 3]]).total.should eq(12)
   end
 
-  it "throws multiple dices of mixes types" do
-    Rollah::Roll.new({4 => 3, 12 => 1}).total.should eq(24)
+  it "throws multiple dice of mixes types" do
+    Rollah::Roll.new([[4, 3], [12, 1]]).total.should eq(24)
+  end
+
+  it "has detailed results" do
+    roll = Rollah::Roll.new([[4, 3], [12, 1]])
+    roll.results.should eq([["d4", 4], ["d4", 4], ["d4", 4], ["d12", 12]])
   end
 end
 
@@ -53,6 +58,7 @@ describe Rollah do
   
   it "parses multiple dice of mixed types" do
     roll = Rollah.parse("1d20+3d6+1d4")
+    roll.results.should eq([["d20", 20], ["d6", 6], ["d6", 6], ["d6", 6], ["d4", 4]])
     roll.total.should eq(42)
   end
   

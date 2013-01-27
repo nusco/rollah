@@ -5,22 +5,32 @@ module Rollah
   class Roll
     attr_reader :id
     
-    def initialize(dices = {})
-      @dices = dices.to_a
+    def initialize(dices = [])
+      @dices = dices
       @id = Rollah.next_id
       $ROLLS[@id] = self
     end
     
-    def total
-      @total ||= total!
+    def results
+      roll! unless @results
+      @results
     end
     
-    def total!
-      result = 0
+    def total
+      roll! unless @results
+      @total
+    end
+    
+    def roll!
+      @results = []
+      @total = 0
       @dices.each do |dice_type, times|
-        times.times { result += Rollah.throw_dice(dice_type) }
+        times.times do
+          value = Rollah.throw_dice(dice_type)
+          @results << ["d#{dice_type}", value]
+          @total += value
+        end
       end
-      result
     end
   end
 
@@ -37,7 +47,7 @@ module Rollah
       rolls_by_dice_type = roll.downcase.split '+'
       all_rolls = rolls_by_dice_type.map do |roll|
         roll = "1#{roll}" if roll.start_with? 'd'
-        roll.split('d').map(&:to_i)
+        roll.split('d').map(&:to_i).reverse
       end
       Roll.new(all_rolls)
     end

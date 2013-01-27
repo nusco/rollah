@@ -5,7 +5,11 @@
   </head>
   <body>
     Total: <%= @roll.total %>
-    </br></br>
+    </p>
+    <% @roll.results.each do |dice, value| %>
+      <%= dice %>: <%= value %></br>
+    <% end %>
+    </p>
     <a href="/">Roll Another One!</a>
   </body>
 </html>

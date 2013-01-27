@@ -11,7 +11,9 @@ Scenario: Roll dice
   Given I am on the homepage
   When I write "d20+3d6+1d4" in "Dice:"
   And I press "Roll Now"
-  Then I should see "Total: 42"
+  Then I should see "d20: 20"
+  And I should see "d6: 6"
+  And I should see "Total: 42"
 
 Scenario: Roll and go back
   Given I am on the homepage
