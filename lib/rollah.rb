@@ -6,6 +6,11 @@ get '/' do
 end
 
 post '/' do
-  @total = DiceRoller.parse(params[:dice]).total
-  erb :result
+  roll = Rollah.parse(params[:dice])
+  redirect "/rolls/#{roll.id}"
+end
+
+get "/rolls/:roll_id" do
+  @roll = Rollah.find(params[:roll_id].to_i)
+  erb :roll
 end

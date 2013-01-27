@@ -1,5 +1,5 @@
 Given /^I use weighted dices$/ do
-  DiceRoller.weight_dices!
+  Rollah.weight_dices!
 end
 
 Given /^I am on the homepage$/ do
@@ -14,6 +14,18 @@ When /^I press "(.*?)"$/ do |button|
   click_button button
 end
 
+When /^I follow "(.*?)"$/ do |link|
+  click_link link
+end
+
 Then /^I should see "(.*?)"$/ do |text|
   page.should have_content text
+end
+
+When /^I bookmark the page$/ do
+  @bookmark = page.current_url
+end
+
+When /^I open the bookmarked page$/ do
+  visit @bookmark
 end
