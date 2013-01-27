@@ -1,6 +1,6 @@
 $: << File.expand_path("../../lib", File.dirname(__FILE__))
 
-require "dicey"
+require "rollah"
 
 require 'capybara'
 include Capybara::DSL

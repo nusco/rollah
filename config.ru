@@ -1,2 +1,2 @@
-require './lib/dicey'
+require './lib/rollah'
 run Sinatra::Application
