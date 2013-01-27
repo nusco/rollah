@@ -4,18 +4,23 @@ module DiceRoller
       @dices = dices
     end
     
-    def result
-      @result ||= result!
+    def total
+      @total ||= total!
     end
     
-    def result!
+    def total!
       result = 0
       @dices.each do |dice, times|
-        dicemax = dice.to_s.gsub(/^d/, '').to_i
+        dicemax = dice.gsub(/^d/, '').to_i
         times.times { result += DiceRoller.throw_dice(dicemax) }
       end
       result
     end
+  end
+  
+  def self.parse(throw)
+    dice = throw.gsub(/^d/, '').to_i
+    Roll.new({throw => 1})
   end
   
   def self.throw_dice(dice)

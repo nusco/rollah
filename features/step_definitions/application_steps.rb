@@ -15,5 +15,5 @@ When /^I press "(.*?)"$/ do |button|
 end
 
 Then /^I should see "(.*?)"$/ do |text|
-  pending # express the regexp above with the code you wish you had
+  page.should have_content text
 end
