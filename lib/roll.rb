@@ -1,7 +1,7 @@
 module DiceRoller
   class Roll
     def initialize(dices)
-      @dices = dices
+      @dices = dices.to_a
     end
     
     def total
@@ -10,17 +10,24 @@ module DiceRoller
     
     def total!
       result = 0
-      @dices.each do |dice, times|
-        dicemax = dice.gsub(/^d/, '').to_i
-        times.times { result += DiceRoller.throw_dice(dicemax) }
+      @dices.each do |dice_type, times|
+        times.times { result += DiceRoller.throw_dice(dice_type) }
       end
       result
     end
   end
   
-  def self.parse(throw)
-    dice = throw.gsub(/^d/, '').to_i
-    Roll.new({throw => 1})
+  def self.parse(roll)
+    rolls_by_dice_type = roll.downcase.split '+'
+    all_rolls = rolls_by_dice_type.map do |roll|
+      roll = "1#{roll}" if roll.start_with? 'd'
+      times, dice = roll.split('d').map(&:to_i)
+    end
+    Roll.new(all_rolls)
+  end
+
+  def self.parse_dice_type(throw)
+    Roll.new({"d#{dice}" => times})
   end
   
   def self.throw_dice(dice)

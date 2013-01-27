@@ -7,8 +7,8 @@ I want to roll dice
 Background:
   Given I use weighted dices
 
-Scenario: Roll one dice
+Scenario: Roll dice
   Given I am on the homepage
-  When I write "d6" in "Dice:"
+  When I write "d20+3d6+1d4" in "Dice:"
   And I press "Roll Now"
-  Then I should see "Total: 6"
+  Then I should see "Total: 42"
