@@ -16,6 +16,12 @@ Scenario: Roll dice
   And I should see "d6: 6"
   And I should see "Total: 42"
   And I should see "Rolled on January 27, 2013 at 12:00PM"
+
+Scenario: Sloppy roll
+  Given I am on the homepage
+  When I write " D20 +3d6+ d4" in "Dice:"
+  And I press "Roll Now"
+  And I should see "Total: 42"
   
 Scenario: Roll and go back
   Given I am on the homepage

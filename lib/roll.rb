@@ -40,7 +40,7 @@ module Rollah
     end
   
     def parse(roll)
-      rolls_by_die_type = roll.downcase.split '+'
+      rolls_by_die_type = roll.gsub(/\s+/, '').downcase.split '+'
       all_rolls = rolls_by_die_type.map do |roll|
         roll = "1#{roll}" if roll.start_with? 'd'
         roll.split('d').map(&:to_i).reverse

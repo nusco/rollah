@@ -72,12 +72,17 @@ describe Rollah do
   end
   
   it "ignores spaces" do
-    roll = Rollah.parse(" 1d20 + 2d4")
+    roll = Rollah.parse(" 1d20  + 2d4")
     roll.total.should eq(28)
   end
   
   it "ignores case" do
     roll = Rollah.parse("1D20+2d4")
     roll.total.should eq(28)
+  end
+  
+  it "accepts shorthand for a single dice" do
+    roll = Rollah.parse("d20")
+    roll.total.should eq(20)
   end
 end
