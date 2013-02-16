@@ -6,8 +6,13 @@ get '/' do
 end
 
 post '/' do
-  roll = Rollah.parse(params[:dice])
-  redirect "/rolls/#{roll.id}"
+  roll = Rollah::Roll.new(params[:dice])
+  if roll.valid?
+    roll.roll!
+    redirect to("/rolls/#{roll.id}")
+  else
+    halt 400, erb(:wrong_roll)
+  end
 end
 
 get "/rolls/:roll_id" do

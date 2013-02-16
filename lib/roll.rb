@@ -5,18 +5,30 @@ module Rollah
   class Roll
     attr_reader :id, :results, :total
     
-    def initialize(dice = [])
-      @dice = dice
+    def initialize(roll_string = "")
+      @roll_string = roll_string
       @id = Rollah.next_id.to_s
       $ROLLS[@id] = self
-      roll!
     end
     
     def rolled_on
       @rolled_on.strftime("%B %d, %Y at %I:%M%p")
     end
+
+    def valid?
+      @roll_string =~ /\A\s*\d*d\d\s*[\+\s\d*d\d]*\z/i
+    end
     
     def roll!
+      raise "Wrong roll syntax" unless valid?
+
+      rolls_by_die_type = @roll_string.gsub(/\s+/, '').downcase.split '+'
+      all_rolls = rolls_by_die_type.map do |roll|
+        roll = "1#{roll}" if roll.start_with? 'd'
+        roll.split('d').map(&:to_i).reverse
+      end
+      @dice = all_rolls
+
       @rolled_on = Time.now
       @results = []
       @total = 0
@@ -27,9 +39,15 @@ module Rollah
           @total += value
         end
       end
+      self
     end
   end
 
+  class MultipleRoll
+    def initialize(dice)
+    end
+  end
+  
   class << self
     def next_id
       $LAST_ID[0] = $LAST_ID[0] + 1
@@ -37,15 +55,6 @@ module Rollah
   
     def find(roll_id)
       $ROLLS[roll_id]
-    end
-  
-    def parse(roll)
-      rolls_by_die_type = roll.gsub(/\s+/, '').downcase.split '+'
-      all_rolls = rolls_by_die_type.map do |roll|
-        roll = "1#{roll}" if roll.start_with? 'd'
-        roll.split('d').map(&:to_i).reverse
-      end
-      Roll.new(all_rolls)
     end
   
     def throw_die(die)

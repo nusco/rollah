@@ -30,10 +30,6 @@ Then /^I should see "(.*?)"$/ do |text|
   page.should have_content text
 end
 
-Then /^I should be on the homepage$/ do
-  page.should have_content "Dice: "
-end
-
 Then /^I should get a (\d+)$/ do |status_code|
   page.status_code.should eq(status_code.to_i)
 end
