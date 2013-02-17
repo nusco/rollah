@@ -23,8 +23,8 @@ Scenario: View hanging roll
   And I press "Ask for Roll"
   And I bookmark the page
   And I open the bookmarked page
-  Then I should see "Waiting for roll..."
-  And I should see "Roll Now"
+  Then I should see "d20+3d6+1d4"
+  And I should see "Waiting for roll..."
 
 Scenario: Roll not found
   Given I open roll 1234

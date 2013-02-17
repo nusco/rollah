@@ -6,6 +6,10 @@ class Roll
   field :roll_string
   field :results, type: Array
   field :rolled_time, type: DateTime
+
+  def rolled?
+    rolled_time
+  end
   
   def rolled_on
     return nil unless rolled_time

@@ -8,6 +8,14 @@ describe Roll do
     Roll.weight_dice!
   end
 
+  it "can be hanging" do
+    roll = Roll.me_a("d4")
+    roll.should_not be_rolled
+      
+    roll.roll!
+    roll.should be_rolled
+  end
+
   it "has a rolling date" do
     Timecop.freeze(Time.local(2013, 1, 27, 12, 05, 0)) do
       roll = Roll.me_a("d4")

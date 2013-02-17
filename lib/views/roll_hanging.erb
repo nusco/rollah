@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>  
-    <title>Rollah</title>
+    <title>Rollah: roll</title>
   </head>
   <body>
-    <h1>ROLLAH!</h1>
+    <%= @roll.roll_string %>
+    </p>
+    Waiting for roll...
+    </p>
     <form id="dice" method="post">
       <label for="dice">Dice: </label><input type="text" name="dice" id="dice">
-      <input type="submit" name="ask_for_roll" value="Ask for Roll">
       <input type="submit" name="roll_now" value="Roll Now">
     </form>
   </body>
