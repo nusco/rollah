@@ -9,5 +9,5 @@ Cucumber::Rake::Task.new do |t|
  t.cucumber_opts = ["--format pretty"]
 end
 
-task :test => ["cucumber", "spec"]
+task :test => ["spec", "cucumber"]
 task :default => "test"
