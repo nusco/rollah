@@ -1,10 +1,16 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (3.2.12)
+      activesupport (= 3.2.12)
+      builder (~> 3.0.0)
+    activesupport (3.2.12)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
     bson (1.8.2)
     bson_ext (1.8.2)
       bson (~> 1.8.2)
-    builder (3.1.4)
+    builder (3.0.4)
     capybara (2.0.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -25,12 +31,18 @@ GEM
     ffi (1.3.1)
     gherkin (2.10.0)
       json (>= 1.4.6)
-    json (1.7.6)
+    i18n (0.6.1)
+    json (1.7.7)
     mime-types (1.19)
-    mongo (1.8.2)
-      bson (~> 1.8.2)
+    mongoid (3.1.0)
+      activemodel (~> 3.2)
+      moped (~> 1.4.2)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.22)
+    moped (1.4.2)
     multi_json (1.5.0)
     nokogiri (1.5.6)
+    origin (1.0.11)
     rack (1.5.0)
     rack-protection (1.3.2)
       rack
@@ -60,7 +72,8 @@ GEM
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     tilt (1.3.3)
-    timecop (0.5.9.1)
+    timecop (0.3.5)
+    tzinfo (0.3.35)
     websocket (1.0.7)
     xpath (1.0.0)
       nokogiri (~> 1.3)
@@ -72,9 +85,9 @@ DEPENDENCIES
   bson_ext
   capybara
   cucumber (= 1.2.0)
-  mongo
+  mongoid
   rake
   rspec
   sinatra
   thin
-  timecop
+  timecop (= 0.3.5)

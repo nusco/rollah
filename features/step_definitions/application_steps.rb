@@ -1,5 +1,5 @@
 Given /^I use weighted dices$/ do
-  Rollah.weight_dice!
+  Roll.weight_dice!
 end
 
 Given /^it's January 27th, 2013 at noon$/ do

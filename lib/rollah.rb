@@ -1,14 +1,20 @@
 require 'sinatra'
+require 'mongoid'
 require_relative 'roll'
+
+configure do
+  Mongoid.load!("mongoid.yml")
+end
 
 get '/' do
   erb :index
 end
 
 post '/' do
-  roll = Rollah::Roll.new(params[:dice])
-  if roll.valid?
+  roll = Roll.me_a params[:dice]
+  if roll.valid_roll?
     roll.roll!
+    roll.save
     redirect to("/rolls/#{roll.id}")
   else
     halt 400, erb(:wrong_roll)
@@ -16,11 +22,11 @@ post '/' do
 end
 
 get "/rolls/:roll_id" do
-  @roll = Rollah.find(params[:roll_id])
-  return 404 if !@roll
-  erb :roll
-end
-
-not_found do
-  erb :roll_not_found
+  begin
+    @roll = Roll.find params[:roll_id]
+    erb :roll
+  rescue
+    status 404
+    erb :roll_not_found
+  end
 end

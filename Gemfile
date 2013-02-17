@@ -3,7 +3,7 @@ ruby "1.9.3"
 
 gem "sinatra"
 gem "thin"
-gem "mongo"
+gem "mongoid"
 gem "bson_ext"
 
 group :development do
@@ -14,5 +14,5 @@ group :test do
   gem "cucumber", "1.2.0"
   gem "capybara"
   gem "rspec"
-  gem "timecop"
+  gem "timecop", "0.3.5"
 end

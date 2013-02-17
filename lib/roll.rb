@@ -1,62 +1,52 @@
-$ROLLS = {} 
-$LAST_ID = [0]
+require 'mongoid'
 
-module Rollah
-  class Roll
-    attr_reader :id, :results, :total
-    
-    def initialize(roll_string = "")
-      @roll_string = roll_string
-      @id = Rollah.next_id.to_s
-      $ROLLS[@id] = self
-    end
-    
-    def rolled_on
-      @rolled_on.strftime("%B %d, %Y at %I:%M%p")
-    end
-
-    def valid?
-      @roll_string =~ /\A\s*\d*d\d\s*[\+\s\d*d\d]*\z/i
-    end
-    
-    def roll!
-      raise "Wrong roll syntax" unless valid?
-
-      rolls_by_die_type = @roll_string.gsub(/\s+/, '').downcase.split '+'
-      all_rolls = rolls_by_die_type.map do |roll|
-        roll = "1#{roll}" if roll.start_with? 'd'
-        roll.split('d').map(&:to_i).reverse
-      end
-      @dice = all_rolls
-
-      @rolled_on = Time.now
-      @results = []
-      @total = 0
-      @dice.each do |die_type, times|
-        times.times do
-          value = Rollah.throw_die(die_type)
-          @results << ["d#{die_type}", value]
-          @total += value
-        end
-      end
-      self
-    end
+class Roll
+  include Mongoid::Document
+  
+  field :roll_string
+  field :results, type: Array
+  field :rolled_time, type: DateTime
+  
+  def rolled_on
+    return nil unless rolled_time
+    rolled_time.strftime("%B %d, %Y at %I:%M%p")
   end
 
-  class MultipleRoll
-    def initialize(dice)
+  def valid_roll?
+    roll_string =~ /\A\s*\d*d\d\s*[\+\s\d*d\d]*\z/i
+  end
+
+  def total
+    total = 0
+    results.each do |result|
+      total += result[1]
     end
+    total
+  end
+  
+  def roll!
+    raise "Wrong roll syntax" unless valid_roll?
+    self.rolled_time = Time.now
+
+    rolls_by_die_type = roll_string.gsub(/\s+/, '').downcase.split '+'
+    all_rolls = rolls_by_die_type.map do |roll|
+      roll = "1#{roll}" if roll.start_with? 'd'
+      roll.split('d').map(&:to_i).reverse
+    end
+
+    self.results = []
+    all_rolls.each do |die_type, times|
+      times.times { results << ["d#{die_type}", Roll.throw_die(die_type)] }
+    end
+
+    self
   end
   
   class << self
-    def next_id
-      $LAST_ID[0] = $LAST_ID[0] + 1
+    def me_a(roll_string)
+      Roll.new(roll_string: roll_string)
     end
-  
-    def find(roll_id)
-      $ROLLS[roll_id]
-    end
-  
+    
     def throw_die(die)
       return die if @weighted
       rand(die) + 1
