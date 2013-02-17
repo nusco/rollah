@@ -17,10 +17,10 @@ Scenario: View rolled roll
   Then I should see "Total: 42"
   And I should see "Rolled on January 27, 2013 at 12:00PM"
 
-Scenario: View hanging roll
+Scenario: View called roll
   Given I am on the homepage
   When I write "d20+3d6+1d4" in "Dice:"
-  And I press "Ask for Roll"
+  And I press "Call a Roll"
   And I bookmark the page
   And I open the bookmarked page
   Then I should see "d20+3d6+1d4"

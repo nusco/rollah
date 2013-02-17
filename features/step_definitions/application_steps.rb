@@ -22,6 +22,10 @@ When /^I press "(.*?)"$/ do |button|
   click_button button
 end
 
+When /^he presses "(.*?)"$/ do |button|
+  click_button button
+end
+
 When /^I follow "(.*?)"$/ do |link|
   click_link link
 end
@@ -34,12 +38,16 @@ Then /^I should get a (\d+)$/ do |status_code|
   page.status_code.should eq(status_code.to_i)
 end
 
-When /^I bookmark the page$/ do
-  @bookmark = page.current_url
+When /^I bookmark the page.*$/ do
+  @link = page.current_url
 end
 
 When /^I open the bookmarked page$/ do
-  visit @bookmark
+  visit @link
+end
+
+When /^the player opens the page$/ do
+  visit @link
 end
 
 After do

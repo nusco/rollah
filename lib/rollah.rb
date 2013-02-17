@@ -24,7 +24,7 @@ end
 get "/rolls/:roll_id" do
   begin
     @roll = Roll.find params[:roll_id]
-    view = @roll.rolled? ? :roll_rolled : :roll_hanging
+    view = @roll.rolled? ? :roll_rolled : :roll_called
     erb view
   rescue
     status 404
