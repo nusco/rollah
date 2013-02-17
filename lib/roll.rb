@@ -12,7 +12,6 @@ class Roll
   end
   
   def rolled_on
-    return nil unless rolled_time
     rolled_time.strftime("%B %d, %Y at %I:%M%p")
   end
 
@@ -21,29 +20,22 @@ class Roll
   end
 
   def total
-    total = 0
-    results.each do |result|
-      total += result[1]
-    end
-    total
+    @total ||= results.map {|result| result[1] }.inject(&:+)
   end
   
   def roll!
     raise "Wrong roll syntax" unless valid_roll?
     self.rolled_time = Time.now
+    self.results = parse_rolls.map {|dice| ["d#{dice}", Roll.roll(dice)] }
+  end
 
-    rolls_by_die_type = roll_string.gsub(/\s+/, '').downcase.split '+'
-    all_rolls = rolls_by_die_type.map do |roll|
+  def parse_rolls
+    rolls_by_dice = roll_string.gsub(/\s+/, '').downcase.split '+'
+    multi_dice_rolls = rolls_by_dice.map do |roll|
       roll = "1#{roll}" if roll.start_with? 'd'
       roll.split('d').map(&:to_i).reverse
     end
-
-    self.results = []
-    all_rolls.each do |die_type, times|
-      times.times { results << ["d#{die_type}", Roll.throw_die(die_type)] }
-    end
-
-    self
+    multi_dice_rolls.map {|dice, times| [dice] * times }.flatten
   end
   
   class << self
@@ -51,9 +43,9 @@ class Roll
       Roll.new(roll_string: roll_string)
     end
     
-    def throw_die(die)
-      return die if @weighted
-      rand(die) + 1
+    def roll(dice)
+      return dice if @weighted
+      rand(dice) + 1
     end
 
     # "You know... for the tests"

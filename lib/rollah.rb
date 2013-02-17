@@ -12,19 +12,16 @@ end
 
 post '/' do
   roll = Roll.me_a params[:dice]
-  if roll.valid_roll?
-    roll.roll! if params[:roll_now]
-    roll.save
-    redirect to("/rolls/#{roll.id}")
-  else
-    halt 400, erb(:wrong_roll)
-  end
+  halt 400, erb(:wrong_roll) unless roll.valid_roll?
+  roll.roll! if params[:roll_now]
+  roll.save
+  redirect to("/rolls/#{roll.id}")
 end
 
 get "/rolls/:roll_id" do
   begin
     @roll = Roll.find params[:roll_id]
-    view = @roll.rolled? ? :roll_rolled : :roll_called
+    view = @roll.rolled? ? :roll_rolled : :roll_open
     erb view
   rescue
     status 404
