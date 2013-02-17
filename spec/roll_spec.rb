@@ -18,7 +18,7 @@ describe Roll do
     end
   end
   
-  it "throws a single dice (d4, d6, d8, d12 or d20)" do
+  it "rolls a single dice (d4, d6, d8, d12 or d20)" do
     Roll.me_a("d4").roll!.total.should eq(4)
     Roll.me_a("d6").roll!.total.should eq(6)
     Roll.me_a("d8").roll!.total.should eq(8)
