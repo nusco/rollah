@@ -15,6 +15,12 @@ Scenario: Roll dice
   And I should see "d6: 6"
   And I should see "Total: 42"
 
+Scenario: Sanity roll
+  Given I am on the homepage
+  When I write "sanity" in "Dice:"
+  And I press "Roll Now"
+  Then I should see "Total: 100"
+
 Scenario: Sloppy roll
   Given I am on the homepage
   When I write " D20 +3d6+ 1d8-d4" in "Dice:"

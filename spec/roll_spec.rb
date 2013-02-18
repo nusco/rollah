@@ -81,10 +81,28 @@ describe Roll do
     roll.total.should eq(28)
   end
   
-  it "accepts shorthand for a single dice" do
+  it "understands shorthand for a single dice" do
     roll = Roll.me_a("d20")
     roll.roll!
     roll.total.should eq(20)
+  end
+  
+  it "understands sanity rolls" do
+    roll = Roll.me_a("sanity")
+    roll.roll!
+    roll.total.should eq(100)
+  end
+  
+  it "understands % rolls" do
+    roll = Roll.me_a("%")
+    roll.roll!
+    roll.total.should eq(100)
+  end
+  
+  it "understands percent rolls" do
+    roll = Roll.me_a("percent")
+    roll.roll!
+    roll.total.should eq(100)
   end
 
   it "has detailed results" do

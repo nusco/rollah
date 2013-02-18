@@ -41,8 +41,10 @@ class Roll
   
   def clean_roll_string
     result = roll_string.gsub(/\s+/, '').downcase
+    return "+1d100" if ['sanity', '%', 'percent'].include? result
     result = "+#{result}" unless result.start_with? '+' or result.start_with? '-'
-    result.gsub!(/\+d/, '+1d').gsub! /\-d/, '-1d'
+    result.gsub! /\+d/, '+1d'
+    result.gsub! /\-d/, '-1d'
     result
   end
   
