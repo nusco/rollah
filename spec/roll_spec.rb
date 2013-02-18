@@ -51,6 +51,24 @@ describe Roll do
     roll.total.should eq(42)
   end
   
+  it "understands negative rolls" do
+    roll = Roll.me_a("-d4")
+    roll.roll!
+    roll.total.should eq(-4)
+  end
+  
+  it "understands explicitly positive rolls" do
+    roll = Roll.me_a("+2d4")
+    roll.roll!
+    roll.total.should eq(8)
+  end
+  
+  it "subtracts or adds rolls" do
+    roll = Roll.me_a("1d20-2d4+1d8")
+    roll.roll!
+    roll.total.should eq(20)
+  end
+  
   it "ignores spaces" do
     roll = Roll.me_a(" 1d20  + 2d4")
     roll.roll!
@@ -76,11 +94,10 @@ describe Roll do
   end
   
   it "can be invalid" do
-    Roll.me_a(" 2D4 + d12 ").should be_valid_roll
+    Roll.me_a(" 2D4 + d12 - d4").should be_valid_roll
 
     Roll.me_a("2d").should_not be_valid_roll
     Roll.me_a("2z4").should_not be_valid_roll
-    Roll.me_a("2d4 - 3d10").should_not be_valid_roll
   end
   
   it "can only be rolled if it's valid" do

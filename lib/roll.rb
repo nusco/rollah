@@ -16,7 +16,7 @@ class Roll
   end
 
   def valid_roll?
-    roll_string =~ /\A\s*\d*d\d\s*[\+\s\d*d\d]*\z/i
+    clean_roll_string =~ /^([\+\-]\d*d\d+)+$/
   end
 
   def total
@@ -30,12 +30,20 @@ class Roll
   end
 
   def parse_rolls
-    rolls_by_dice = roll_string.gsub(/\s+/, '').downcase.split '+'
+    rolls_by_dice = clean_roll_string.gsub('+', ' +').gsub('-', ' -').split ' '
     multi_dice_rolls = rolls_by_dice.map do |roll|
-      roll = "1#{roll}" if roll.start_with? 'd'
-      roll.split('d').map(&:to_i).reverse
+      rolls, dice = roll[1..-1].split('d').map(&:to_i)
+      dice = -dice if roll[0] == '-'
+      [dice, rolls]
     end
     multi_dice_rolls.map {|dice, times| [dice] * times }.flatten
+  end
+  
+  def clean_roll_string
+    result = roll_string.gsub(/\s+/, '').downcase
+    result = "+#{result}" unless result.start_with? '+' or result.start_with? '-'
+    result.gsub!(/\+d/, '+1d').gsub! /\-d/, '-1d'
+    result
   end
   
   class << self

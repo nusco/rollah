@@ -9,7 +9,7 @@ Background:
 
 Scenario: Roll dice
   Given I am on the homepage
-  When I write "d20+3d6+1d4" in "Dice:"
+  When I write "d20+3d6+1d8-1d4" in "Dice:"
   And I press "Roll Now"
   Then I should see "d20: 20"
   And I should see "d6: 6"
@@ -17,13 +17,13 @@ Scenario: Roll dice
 
 Scenario: Sloppy roll
   Given I am on the homepage
-  When I write " D20 +3d6+ d4" in "Dice:"
+  When I write " D20 +3d6+ 1d8-d4" in "Dice:"
   And I press "Roll Now"
   Then I should see "Total: 42"
   
 Scenario: Roll and go back
   Given I am on the homepage
-  When I write "d20+3d6+1d4" in "Dice:"
+  When I write "d20" in "Dice:"
   And I press "Roll Now"
   And I follow "Roll Another One!"
   Then I should see "Dice:"
