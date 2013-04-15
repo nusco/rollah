@@ -8,6 +8,7 @@ gem "bson_ext"
 
 group :development do
   gem "rake"
+  gem "pry"
 end
 
 group :test do
