@@ -1,5 +1,4 @@
 source "https://rubygems.org"
-ruby "1.9.3"
 
 gem "sinatra"
 gem "thin"
@@ -12,8 +11,8 @@ group :development do
 end
 
 group :test do
-  gem "cucumber", "1.2.0"
+  gem "cucumber"
   gem "capybara"
   gem "rspec"
-  gem "timecop", "0.3.5"
+  gem "timecop"
 end
