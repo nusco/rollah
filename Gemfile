@@ -4,6 +4,7 @@ gem "sinatra"
 gem "thin"
 gem "mongoid"
 gem "bson_ext"
+gem "iconv"
 
 group :development do
   gem "rake"
@@ -11,8 +12,8 @@ group :development do
 end
 
 group :test do
-  gem "cucumber"
-  gem "capybara"
   gem "rspec"
+  gem "capybara"
+  gem "turnip"
   gem "timecop"
 end

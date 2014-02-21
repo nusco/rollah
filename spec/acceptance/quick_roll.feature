@@ -39,5 +39,5 @@ Scenario: Wrong roll
   When I write "2d" in "Dice:"
   And I press "Roll Now"
   Then I should get a 400
-  And I should see "I cannot understand your roll ("2d"?)."
-  And I should see "Try to use standard RPG dice conventions - something like "3d6+d4"."
+  And I should see 'I cannot understand your roll ("2d"?).'
+  And I should see 'Try to use standard RPG dice conventions - something like "3d6+d4".'

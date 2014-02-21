@@ -1,7 +1,4 @@
-$: << File.expand_path("../../lib", File.dirname(__FILE__))
-
-require "roll"
-require "timecop"
+require "spec_helper"
 
 describe Roll do
   before do
